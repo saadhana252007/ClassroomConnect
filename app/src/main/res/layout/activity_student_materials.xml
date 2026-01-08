@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp"
+    android:background="@drawable/light_blue"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:backgroundTint="@null"
+    app:rippleColor="@android:color/transparent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Class Materials"
+        android:gravity="center"
+        android:fontFamily="@font/eagle_lake"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:layout_marginTop="50dp"
+        android:textColor="#191970"
+        android:layout_marginBottom="20dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMaterials"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

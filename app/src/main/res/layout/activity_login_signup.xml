@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/class_back">
+
+    <TextView
+        android:text="  Classroom    Connect"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="@drawable/white_border_edittext"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/eagle_lake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-100dp"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:text="LOGIN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/buttonbox"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"
+        android:textSize="20sp"
+        android:fontFamily="@font/eagle_lake"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:text="SIGN UP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/buttonbox"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"
+        android:textSize="20sp"
+        android:fontFamily="@font/eagle_lake"
+        android:textColor="@color/white"/>
+</LinearLayout>

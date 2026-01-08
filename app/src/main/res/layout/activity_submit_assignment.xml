@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/light_blue">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Assignment"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#191970"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/eagle_lake"/>
+
+    <TextView
+        android:id="@+id/tvAssignmentName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Assignment Name"
+        android:textSize="18sp"
+        android:textColor="#191970"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnSelectFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select File"
+        android:background="@drawable/buttonbox_blue"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_marginBottom="12dp"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"
+        android:fontFamily="@font/eagle_lake"/>
+
+    <TextView
+        android:id="@+id/tvSelectedFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No file selected"
+        android:textSize="14sp"
+        android:textColor="#555555"
+        android:layout_marginBottom="20dp"/>
+
+    <ProgressBar
+        android:id="@+id/uploadProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnSubmitAssignment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Assignment"
+        android:background="@drawable/buttonbox_blue"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:fontFamily="@font/eagle_lake"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"/>
+
+</LinearLayout>

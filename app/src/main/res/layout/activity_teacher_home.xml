@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D1C4E9"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/tvWelcomeTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome, Teacher.... "
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#512DA8"
+        android:fontFamily="@font/eagle_lake"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="50dp"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:alignmentMode="alignMargins"
+        android:useDefaultMargins="true">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_columnWeight="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@android:color/white"
+            android:padding="4dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/create_class"/>
+
+            <Button
+                android:id="@+id/btnCreateClass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+            />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_columnWeight="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@android:color/white"
+            android:padding="4dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/my_classes"/>
+
+            <Button
+                android:id="@+id/btnMyClasses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_columnWeight="1"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            android:padding="4dp"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/upload"/>
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_columnWeight="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="10dp"
+            app:cardBackgroundColor="@android:color/white"
+            android:padding="4dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logout"/>
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                />
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+</LinearLayout>

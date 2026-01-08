@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/mid_vio">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center"
+        android:text="Upload  Material"
+        android:fontFamily="@font/eagle_lake"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/white_border_edittext"/>
+
+    <Spinner
+        android:id="@+id/classSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"
+        android:textColor="#4A148C"/>
+
+    <Button
+        android:id="@+id/selectFileBtn"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select File"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:background="@drawable/buttonbox"
+        app:backgroundTint="@null"
+        android:textSize="17sp"
+        app:rippleColor="@android:color/transparent"
+        android:fontFamily="@font/eagle_lake"/>
+
+    <TextView
+        android:id="@+id/fileNameText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="No file selected"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="1dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        />
+
+    <Button
+        android:id="@+id/uploadFileBtn"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload File"
+        android:textSize="17sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:background="@drawable/buttonbox"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"
+        android:fontFamily="@font/eagle_lake"/>
+
+    <EditText
+        android:id="@+id/etfilename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="File Name"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/border"
+        android:textColor="#4A148C"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"
+        android:textColorHint="#4A148C"/>
+
+    <ProgressBar
+        android:id="@+id/uploadProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
+</LinearLayout>

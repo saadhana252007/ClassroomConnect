@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Base.Theme.ClassroomConnect"
+        parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- DO NOT force any color here -->
+
+        <!-- Disable Material button tint ONLY -->
+        <item name="materialButtonStyle">@style/NoTintButton</item>
+
+    </style>
+
+    <style name="Theme.ClassroomConnect"
+        parent="Base.Theme.ClassroomConnect" />
+
+    <!-- Button style without auto tint -->
+    <style name="NoTintButton"
+        parent="Widget.Material3.Button">
+
+        <item name="backgroundTint">@null</item>
+        <item name="backgroundTintMode">src_in</item>
+
+    </style>
+
+</resources>

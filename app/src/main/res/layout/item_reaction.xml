@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="#D1C4E9">
+
+    <TextView
+        android:id="@+id/tvStudentName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Student Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#4A148C" />
+
+    <TextView
+        android:id="@+id/tvEmoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="👍"
+        android:textSize="20sp"/>
+</LinearLayout>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8A6FCB">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="15dp"
+        android:background="@drawable/textviewbox"
+        android:textColor="#4A148C"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:hint="FULLNAME"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColorHint="@color/white"
+        />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="15dp"
+        android:background="@drawable/textviewbox"
+        android:textColor="#4A148C"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:hint="EMAIL"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColorHint="@color/white"
+        />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="15dp"
+        android:background="@drawable/textviewbox"
+        android:textColor="#4A148C"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:hint="PASSWORD"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColorHint="@color/white"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="140dp"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/textviewbox">
+
+                <ImageView
+                    android:id="@+id/imgTeacher"
+                    android:layout_width="120dp"
+                    android:layout_height="110dp"
+                    android:contentDescription="Teacher"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/signup_teacher" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="140dp"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/textviewbox">
+
+                <ImageView
+                    android:id="@+id/imgStudent"
+                    android:layout_width="120dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/signup_student"
+                    android:contentDescription="Student"
+                    android:scaleType="centerCrop"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="-40dp">
+
+        <RadioGroup
+            android:id="@+id/rgRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <RadioButton
+                android:id="@+id/rbTeacher"
+                android:layout_width="153dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/textviewbox"
+                android:text="TEACHER"
+                android:textColor="@color/white"/>
+
+            <RadioButton
+                android:id="@+id/rbStudent"
+                android:layout_width="141dp"
+                android:layout_height="40dp"
+                android:layout_margin="16dp"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/textviewbox"
+                android:text="STUDENT"
+                android:textColor="@color/white"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:text="SIGN UP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonbox"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:backgroundTint="@null"
+        app:rippleColor="@android:color/transparent"
+        android:textSize="20sp"
+        android:fontFamily="@font/eagle_lake"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/tvError"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+</LinearLayout>

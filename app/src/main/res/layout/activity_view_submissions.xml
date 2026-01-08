@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/light_blue">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Student Submissions"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#191970"
+        android:fontFamily="@font/eagle_lake"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSubmissions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
