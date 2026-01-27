@@ -15,8 +15,10 @@ class AssignmentsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAssignmentsBinding
     private lateinit var adapter: AssignmentAdapter
-    private val db = FirebaseFirestore.getInstance()
+
+    private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
+
     private val assignmentList = mutableListOf<AssignmentModel>()
     private lateinit var classId: String
 
@@ -49,42 +51,21 @@ class AssignmentsActivity : AppCompatActivity() {
         loadAssignments()
     }
 
-    private fun showDeleteDialog(item: AssignmentModel, position: Int) {
-        AlertDialog.Builder(this)
-            .setTitle("Delete assignment")
-            .setMessage("Are you sure you want to delete this?")
-            .setPositiveButton("Delete") { _, _ ->
-
-                db.collection("assignments")
-                    .document(item.fileId)
-                    .delete()
-                    .addOnSuccessListener {
-
-                        if (item.fileUrl.isNotEmpty()) {
-                            storage.getReferenceFromUrl(item.fileUrl).delete()
-                        }
-
-                        assignmentList.removeAt(position)
-                        adapter.notifyItemRemoved(position)
-
-                        Toast.makeText(this, "Deleted successfully", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Failed to delete", Toast.LENGTH_SHORT).show()
-                    }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
-    }
-
     private fun loadAssignments() {
-        db.collection("assignments")
+        firestore.collection("classes")
+            .document(classId)
+            .collection("assignments")
             .orderBy("timestamp")
-            .addSnapshotListener { value, _ ->
+            .addSnapshotListener { snapshot, error ->
+
+                if (error != null) {
+                    Toast.makeText(this, "Failed to load assignments", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
 
                 assignmentList.clear()
 
-                value?.forEach { doc ->
+                snapshot?.forEach { doc ->
                     assignmentList.add(
                         AssignmentModel(
                             fileId = doc.id,
@@ -96,5 +77,35 @@ class AssignmentsActivity : AppCompatActivity() {
 
                 adapter.notifyDataSetChanged()
             }
+    }
+
+    private fun showDeleteDialog(item: AssignmentModel, position: Int) {
+        AlertDialog.Builder(this)
+            .setTitle("Delete assignment")
+            .setMessage("Are you sure you want to delete this assignment?")
+            .setPositiveButton("Delete") { _, _ ->
+
+                firestore.collection("classes")
+                    .document(classId)
+                    .collection("assignments")
+                    .document(item.fileId)
+                    .delete()
+                    .addOnSuccessListener {
+
+                        if (item.fileUrl.isNotBlank()) {
+                            storage.getReferenceFromUrl(item.fileUrl).delete()
+                        }
+
+                        assignmentList.removeAt(position)
+                        adapter.notifyItemRemoved(position)
+
+                        Toast.makeText(this, "Assignment deleted", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 }

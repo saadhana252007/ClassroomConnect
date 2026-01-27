@@ -10,6 +10,8 @@ import com.example.classroomconnect.databinding.ActivityUploadAssignmentBinding
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.auth.FirebaseAuth
+
 
 class UploadAssignmentActivity : AppCompatActivity() {
 
@@ -27,21 +29,18 @@ class UploadAssignmentActivity : AppCompatActivity() {
         binding = ActivityUploadAssignmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ✅ CLASS ID CHECK
         classId = intent.getStringExtra("CLASS_ID") ?: run {
             Toast.makeText(this, "Class ID missing", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        // 📂 Select file
         binding.btnselectassign.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*"
             startActivityForResult(intent, 101)
         }
 
-        // ⬆️ Upload assignment
         binding.btnuploadassign.setOnClickListener {
 
             val name = binding.etAssignmentname.text.toString().trim()
@@ -56,30 +55,48 @@ class UploadAssignmentActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+
+            if (FirebaseAuth.getInstance().currentUser == null) {
+                Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
+            val size = contentResolver.openInputStream(fileUri!!)?.available() ?: 0
+            if (size <= 0) {
+                Toast.makeText(this, "Invalid file", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
             binding.uploadProgress.visibility = View.VISIBLE
 
-            val fileRef =
-                storage.reference.child("assignments/$classId/${System.currentTimeMillis()}")
+            val fileRef = storage.reference
+                .child("assignments/$classId/${System.currentTimeMillis()}")
 
             fileRef.putFile(fileUri!!)
                 .addOnSuccessListener {
+
                     fileRef.downloadUrl.addOnSuccessListener { url ->
 
+                        val assignmentRef = firestore.collection("classes")
+                            .document(classId)
+                            .collection("assignments")
+                            .document()
+
                         val assignmentData = hashMapOf(
+                            "assignmentId" to assignmentRef.id,
                             "name" to name,
                             "fileUrl" to url.toString(),
                             "timestamp" to FieldValue.serverTimestamp()
                         )
 
-                        firestore.collection("classes")
-                            .document(classId)
-                            .collection("assignments")
-                            .add(assignmentData)
+                        assignmentRef.set(assignmentData)
                             .addOnSuccessListener {
                                 binding.uploadProgress.visibility = View.GONE
                                 Toast.makeText(
                                     this,
-                                    "Assignment uploaded",
+                                    "Assignment uploaded successfully",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 finish()
@@ -94,10 +111,16 @@ class UploadAssignmentActivity : AppCompatActivity() {
                             }
                     }
                 }
-                .addOnFailureListener {
+                .addOnFailureListener { e ->
                     binding.uploadProgress.visibility = View.GONE
-                    Toast.makeText(this, "File upload failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Upload failed: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    e.printStackTrace()
                 }
+
         }
     }
 

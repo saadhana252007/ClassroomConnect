@@ -17,6 +17,8 @@ class BookmarksActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
 
     private lateinit var rvBookmark: RecyclerView
+    private lateinit var adapter: BookmarkAdapter
+    private val bookmarkList = mutableListOf<MaterialModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,13 +27,15 @@ class BookmarksActivity : AppCompatActivity() {
         rvBookmark = findViewById(R.id.rvbookmark)
         rvBookmark.layoutManager = LinearLayoutManager(this)
 
+        adapter = BookmarkAdapter(this, bookmarkList)
+        rvBookmark.adapter = adapter
+
         loadBookmarks()
     }
 
     private fun loadBookmarks() {
 
         val userId = auth.currentUser?.uid ?: return
-        val combinedList = mutableListOf<MaterialModel>()
 
         firestore.collection("users")
             .document(userId)
@@ -39,28 +43,21 @@ class BookmarksActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { snap ->
 
-                val materialList = snap.toObjects(MaterialModel::class.java)
-                combinedList.addAll(materialList)
-                firestore.collection("users")
-                    .document(userId)
-                    .collection("bookmarkedAssignments")
-                    .get()
-                    .addOnSuccessListener { assignSnap ->
+                bookmarkList.clear()
 
-                        for (doc in assignSnap.documents) {
-                            val name = doc.getString("name") ?: "Assignment"
-                            val fileUrl = doc.getString("fileUrl") ?: ""
-                            val material = MaterialModel(
-                                 fileName =  name,
-                                fileUrl = fileUrl
-                            )
-                            combinedList.add(material)
-                        }
-                        rvBookmark.adapter = BookmarkAdapter(this, combinedList)
+                for (doc in snap.documents) {
+                    val material = doc.toObject(MaterialModel::class.java)
+                    if (material != null) {
+                        material.fileId = doc.id
+                        bookmarkList.add(material)
                     }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Failed to load assignments", Toast.LENGTH_SHORT).show()
-                    }
+                }
+
+                adapter.notifyDataSetChanged()
+
+                if (bookmarkList.isEmpty()) {
+                    Toast.makeText(this, "No bookmarks yet", Toast.LENGTH_SHORT).show()
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to load bookmarks", Toast.LENGTH_SHORT).show()

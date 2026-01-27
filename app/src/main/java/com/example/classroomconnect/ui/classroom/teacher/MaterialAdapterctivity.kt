@@ -93,40 +93,37 @@ class MaterialsAdapter(
                 .setNegativeButton("Close", null)
                 .create()
 
-            firestore.collection("materials")
+            firestore.collection("classes")
+                .document(classId)
+                .collection("materials")
                 .document(item.fileId)
                 .collection("reactions")
                 .get()
                 .addOnSuccessListener { reactionDocs ->
 
-                    if (reactionDocs.isEmpty) {
-                        Toast.makeText(context, "No reactions yet", Toast.LENGTH_SHORT).show()
-                        return@addOnSuccessListener
-                    }
-
                     reactionsList.clear()
 
-                    for (doc in reactionDocs.documents) {
-                        val userId = doc.id
-                        val emoji = doc.getString("emoji") ?: ""
-
-                        firestore.collection("users")
-                            .document(userId)
-                            .get()
-                            .addOnSuccessListener { userDoc ->
-                                val studentName =
-                                    userDoc.getString("name") ?: "Student"
-
-                                reactionsList.add(
-                                    ReactionItem(studentName, emoji)
-                                )
-                                reactionsAdapter.notifyDataSetChanged()
-                            }
+                    if (reactionDocs.isEmpty) {
+                        Toast.makeText(context, "No reactions yet", Toast.LENGTH_SHORT).show()
                     }
 
+                    for (doc in reactionDocs.documents) {
+                        val emoji = doc.getString("emoji") ?: ""
+                        val studentName = doc.getString("studentName") ?: "Student"
+
+                        reactionsList.add(
+                            ReactionItem(studentName, emoji)
+                        )
+                    }
+
+                    reactionsAdapter.notifyDataSetChanged()
                     dialog.show()
                 }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Failed to load reactions", Toast.LENGTH_SHORT).show()
+                }
         }
+
     }
 
     override fun getItemCount(): Int = list.size

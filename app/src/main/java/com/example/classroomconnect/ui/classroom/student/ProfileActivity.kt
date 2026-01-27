@@ -1,5 +1,6 @@
 package com.example.classroomconnect.ui.classroom.student
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.classroomconnect.databinding.ActivityProfileBinding
+import com.example.classroomconnect.ui.auth.LoginSignupActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -52,6 +54,11 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 saveProfile()
             }
+        }
+        binding.btnLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, LoginSignupActivity::class.java))
+            finish()
         }
     }
 

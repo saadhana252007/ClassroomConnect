@@ -49,24 +49,27 @@ class StudentMaterialsActivity : AppCompatActivity() {
                 materialList.clear()
 
                 for (doc in snapshot.documents) {
-                    val material = doc.toObject(MaterialModel::class.java)
-                    if (material != null) {
-                        material.fileId = doc.id
-                        materialList.add(material)
+                    val material = doc.toObject(MaterialModel::class.java) ?: continue
 
-                        firestore.collection("materials")
-                            .document(doc.id)
-                            .collection("reactions")
-                            .document(userId)
-                            .get()
-                            .addOnSuccessListener { reactionDoc ->
-                                if (reactionDoc.exists()) {
-                                    material.myReaction =
-                                        reactionDoc.getString("emoji") ?: ""
-                                    adapter.notifyDataSetChanged()
-                                }
+                    material.fileId = doc.id
+                    material.classId = classId   
+
+                    materialList.add(material)
+
+                    firestore.collection("classes")
+                        .document(classId)
+                        .collection("materials")
+                        .document(doc.id)
+                        .collection("reactions")
+                        .document(userId)
+                        .get()
+                        .addOnSuccessListener { reactionDoc ->
+                            if (reactionDoc.exists()) {
+                                material.myReaction =
+                                    reactionDoc.getString("emoji") ?: ""
+                                adapter.notifyDataSetChanged()
                             }
-                    }
+                        }
                 }
 
                 adapter.notifyDataSetChanged()
@@ -75,4 +78,5 @@ class StudentMaterialsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to load materials", Toast.LENGTH_SHORT).show()
             }
     }
+
 }

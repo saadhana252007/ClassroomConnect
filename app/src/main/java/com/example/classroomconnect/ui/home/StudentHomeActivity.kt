@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.classroomconnect.databinding.ActivityStudentHomeBinding
 import com.example.classroomconnect.model.ClassModel
+import com.example.classroomconnect.ui.auth.LoginSignupActivity
 import com.example.classroomconnect.ui.classroom.student.ProfileActivity
 import com.example.classroomconnect.ui.classroom.student.StudentClassDetailActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +35,7 @@ class StudentHomeActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
 
         loadStudentClasses()
     }

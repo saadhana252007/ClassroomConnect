@@ -41,6 +41,7 @@ class SignupActivity : AppCompatActivity() {
                 } else {
                     Intent(this, StudentHomeActivity::class.java)
                 }
+                startActivity(intent)
                 finish()
             }
             else {

@@ -15,6 +15,8 @@ import com.google.firebase.storage.FirebaseStorage
 class SubmitAssignmentActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySubmitAssignmentBinding
     private var fileUri: Uri? = null
+    private lateinit var classId: String
+
     private val auth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -24,6 +26,12 @@ class SubmitAssignmentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySubmitAssignmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        classId = intent.getStringExtra("CLASS_ID") ?: run {
+            Toast.makeText(this, "Class ID missing", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
         assignmentId = intent.getStringExtra("ASSIGNMENT_ID") ?: run {
             Toast.makeText(this, "Assignment ID missing", Toast.LENGTH_SHORT).show()
             finish()
@@ -60,33 +68,44 @@ class SubmitAssignmentActivity : AppCompatActivity() {
             return
         }
 
-        val studentId = auth.currentUser?.uid ?: return
+        val studentId = auth.currentUser?.uid ?: run {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         binding.uploadProgress.visibility = View.VISIBLE
+        binding.uploadProgress.progress = 0
 
         firestore.collection("users")
             .document(studentId)
             .get()
             .addOnSuccessListener { userDoc ->
 
-                val studentName =
-                    userDoc.getString("name") ?: "Unknown Student"
+                val studentName = userDoc.getString("name") ?: "Unknown Student"
 
                 val ref = storage.reference.child(
-                    "submissions/$assignmentId/${System.currentTimeMillis()}"
+                    "submissions/$assignmentId/$studentId-${System.currentTimeMillis()}"
                 )
 
                 ref.putFile(uri)
+                    .addOnProgressListener { task ->
+                        val progress = (100.0 * task.bytesTransferred / task.totalByteCount).toInt()
+                        binding.uploadProgress.progress = progress
+                    }
                     .addOnSuccessListener {
+
                         ref.downloadUrl.addOnSuccessListener { url ->
+
                             val data = hashMapOf(
                                 "studentId" to studentId,
                                 "studentName" to studentName,
                                 "fileUrl" to url.toString(),
-                                "timestamp" to System.currentTimeMillis()
+                                "submittedAt" to System.currentTimeMillis()
                             )
 
-                            firestore.collection("assignments")
+                            firestore.collection("classes")
+                                .document(classId)
+                                .collection("assignments")
                                 .document(assignmentId)
                                 .collection("submissions")
                                 .add(data)
@@ -99,16 +118,25 @@ class SubmitAssignmentActivity : AppCompatActivity() {
                                     ).show()
                                     finish()
                                 }
+                                .addOnFailureListener {
+                                    binding.uploadProgress.visibility = View.GONE
+                                    Toast.makeText(this, "Failed to save submission", Toast.LENGTH_SHORT).show()
+                                }
                         }
                     }
-                    .addOnFailureListener {
+                    .addOnFailureListener { e ->
                         binding.uploadProgress.visibility = View.GONE
-                        Toast.makeText(this, "Submission failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "Upload failed: ${e.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
             }
             .addOnFailureListener {
                 binding.uploadProgress.visibility = View.GONE
-                Toast.makeText(this, "Failed to get student name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to get student details", Toast.LENGTH_SHORT).show()
             }
     }
+
 }

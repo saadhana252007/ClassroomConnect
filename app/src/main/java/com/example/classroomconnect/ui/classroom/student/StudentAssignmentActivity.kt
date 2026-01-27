@@ -12,7 +12,9 @@ class StudentAssignmentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStudentAssignmentBinding
     private val firestore = FirebaseFirestore.getInstance()
-    private val list = mutableListOf<StudentAssignmentModel>()
+    private val assignmentList = mutableListOf<StudentAssignmentModel>()
+    private lateinit var classId: String
+    private lateinit var adapter: StudentAssignmentsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,46 +22,51 @@ class StudentAssignmentActivity : AppCompatActivity() {
         binding = ActivityStudentAssignmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val classId = intent.getStringExtra("CLASS_ID")
-        if (classId.isNullOrEmpty()) {
+        classId = intent.getStringExtra("CLASS_ID") ?: run {
             Toast.makeText(this, "Class ID missing", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        binding.rvStudentAssignment.layoutManager =
-            LinearLayoutManager(this)
+        binding.rvStudentAssignment.layoutManager = LinearLayoutManager(this)
+        adapter = StudentAssignmentsAdapter(this, assignmentList)
+        binding.rvStudentAssignment.adapter = adapter
 
         loadAssignments()
     }
 
     private fun loadAssignments() {
 
-        firestore.collection("assignments")
+        firestore.collection("classes")
+            .document(classId)
+            .collection("assignments")
             .orderBy("timestamp")
             .get()
             .addOnSuccessListener { snap ->
 
-                list.clear()
+                assignmentList.clear()
 
                 for (doc in snap.documents) {
-                    val item = doc.toObject(StudentAssignmentModel::class.java)
 
-                    if (item != null && item.fileUrl.isNotBlank()) {
-                        val fixedItem = item.copy(
-                            assignmentId = doc.id
+                    val name = doc.getString("name") ?: "Assignment"
+                    val fileUrl = doc.getString("fileUrl") ?: ""
+
+                    assignmentList.add(
+                        StudentAssignmentModel(
+                            assignmentId = doc.id,
+                            name = name,
+                            fileUrl = fileUrl
                         )
-                        list.add(fixedItem)
-                    }
+                    )
                 }
-                binding.rvStudentAssignment.adapter =
-                    StudentAssignmentsAdapter(this, list)
+
+                adapter.notifyDataSetChanged()
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
                 Toast.makeText(
                     this,
-                    "Failed to load assignments",
-                    Toast.LENGTH_SHORT
+                    "Failed to load assignments: ${e.message}",
+                    Toast.LENGTH_LONG
                 ).show()
             }
     }

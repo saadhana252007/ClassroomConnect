@@ -57,7 +57,6 @@ class StudentMaterialsAdapter(
         }
 
         holder.btnDownload.setOnClickListener {
-
             if (item.fileUrl.isBlank()) {
                 Toast.makeText(context, "File not available", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -65,21 +64,16 @@ class StudentMaterialsAdapter(
 
             AlertDialog.Builder(context)
                 .setTitle("Material options")
-                .setMessage("What do you want to do?")
-                .setPositiveButton("Preview") { _, _ ->
-                    openPreview(item.fileUrl)
+                .setItems(arrayOf("Preview", "Download")) { _, which ->
+                    if (which == 0) openPreview(item.fileUrl)
+                    else downloadFile(item.fileUrl, item.fileName)
                 }
-                .setNegativeButton("Download") { _, _ ->
-                    downloadFile(item.fileUrl, item.fileName)
-                }
-                .setNeutralButton("Cancel", null)
                 .show()
         }
 
         holder.itemView.setOnLongClickListener {
 
             val userId = auth.currentUser?.uid ?: return@setOnLongClickListener true
-
             val emojis = arrayOf("👍", "❤️", "🔥", "😊", "👏", "🙌")
 
             AlertDialog.Builder(context)
@@ -88,22 +82,38 @@ class StudentMaterialsAdapter(
 
                     val selectedEmoji = emojis[which]
 
-                    firestore.collection("materials")
-                        .document(item.fileId)
-                        .collection("reactions")
+                    firestore.collection("users")
                         .document(userId)
-                        .set(mapOf("emoji" to selectedEmoji))
-                        .addOnSuccessListener {
+                        .get()
+                        .addOnSuccessListener { userDoc ->
 
-                            item.myReaction = selectedEmoji
-                            holder.tvSelectedEmoji.text = selectedEmoji
-                            holder.tvSelectedEmoji.visibility = View.VISIBLE
+                            val studentName =
+                                userDoc.getString("name") ?: "Student"
 
-                            Toast.makeText(
-                                context,
-                                "Reacted $selectedEmoji",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            val reactionData = hashMapOf(
+                                "emoji" to selectedEmoji,
+                                "studentName" to studentName
+                            )
+
+                            firestore.collection("classes")
+                                .document(item.classId)
+                                .collection("materials")
+                                .document(item.fileId)
+                                .collection("reactions")
+                                .document(userId)
+                                .set(reactionData)
+                                .addOnSuccessListener {
+
+                                    item.myReaction = selectedEmoji
+                                    holder.tvSelectedEmoji.text = selectedEmoji
+                                    holder.tvSelectedEmoji.visibility = View.VISIBLE
+
+                                    Toast.makeText(
+                                        context,
+                                        "Reacted $selectedEmoji",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                         }
                 }
                 .show()
@@ -115,28 +125,40 @@ class StudentMaterialsAdapter(
 
             val userId = auth.currentUser?.uid ?: return@setOnClickListener
 
-            firestore.collection("users")
+            val bookmarkRef = firestore.collection("users")
                 .document(userId)
                 .collection("bookmarks")
-                .add(item)
+                .document(item.fileId)
+
+            val bookmarkData = hashMapOf(
+                "fileId" to item.fileId,
+                "fileName" to item.fileName,
+                "fileUrl" to item.fileUrl,
+                "classId" to item.classId
+            )
+
+            bookmarkRef.set(bookmarkData)
                 .addOnSuccessListener {
                     Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show()
                 }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Bookmark failed", Toast.LENGTH_SHORT).show()
+                }
         }
+
     }
 
     override fun getItemCount(): Int = list.size
+
     private fun openPreview(url: String) {
         try {
-            context.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            )
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } catch (e: Exception) {
             Toast.makeText(context, "Unable to open preview", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun downloadFile(url: String, fileName: String) {
 
+    private fun downloadFile(url: String, fileName: String) {
         val request = DownloadManager.Request(Uri.parse(url))
             .setTitle(fileName)
             .setDescription("Downloading material...")
@@ -150,7 +172,6 @@ class StudentMaterialsAdapter(
 
         val manager =
             context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-
         manager.enqueue(request)
 
         Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show()

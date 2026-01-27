@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.classroomconnect.databinding.ItemAssignBinding
 import com.example.classroomconnect.model.AssignmentModel
 
-
 class AssignmentAdapter(
     private val list: MutableList<AssignmentModel>,
     private val onDelete: (AssignmentModel, Int) -> Unit
@@ -30,6 +29,7 @@ class AssignmentAdapter(
     override fun onBindViewHolder(holder: AssignmentVH, position: Int) {
         val item = list[position]
         val context = holder.binding.root.context
+        
         holder.binding.tvAssignmentName.text = item.name
 
         holder.binding.root.setOnClickListener {

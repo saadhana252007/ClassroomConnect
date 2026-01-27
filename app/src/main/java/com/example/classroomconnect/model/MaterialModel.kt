@@ -5,6 +5,7 @@ data class MaterialModel(
     val fileName: String = "",
     val fileUrl: String = "",
     val timestamp: Long = 0L,
-    val classId: String = "",
-    var myReaction: String = ""
+    var classId: String = "",
+    var myReaction: String = "",
+    var studentName: String = ""
 )

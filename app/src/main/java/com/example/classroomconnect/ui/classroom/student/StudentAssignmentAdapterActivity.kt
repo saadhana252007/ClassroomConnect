@@ -32,30 +32,19 @@ class StudentAssignmentsAdapter(
         val item = list[position]
 
         holder.binding.tvStuAssignmentName.text =
-            if (item.name.isNotBlank()) item.name else "Assignment"
-
-
-        holder.binding.tvStuAssignmentName.setOnClickListener {
-            if (item.fileUrl.isBlank()) {
-                Toast.makeText(context, "File not available", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.fileUrl))
-            context.startActivity(intent)
-        }
+            if (item.name.isNotEmpty()) item.name else "Assignment"
 
         holder.binding.btnSubmitAssignment.setOnClickListener {
 
-            if (item.assignmentId.isBlank()) {
-                Toast.makeText(context, "Assignment ID missing", Toast.LENGTH_SHORT).show()
+            if (item.assignmentId.isEmpty()) {
+                Toast.makeText(context, "Invalid assignment", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val intent = Intent(context, SubmitAssignmentActivity::class.java)
+            intent.putExtra("CLASS_ID", item.classId)
             intent.putExtra("ASSIGNMENT_ID", item.assignmentId)
             intent.putExtra("ASSIGNMENT_NAME", item.name)
-
             context.startActivity(intent)
         }
     }

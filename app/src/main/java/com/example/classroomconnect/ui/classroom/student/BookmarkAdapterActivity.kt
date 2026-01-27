@@ -20,6 +20,7 @@ class BookmarkAdapter(
     private val context: Context,
     private val list: MutableList<MaterialModel>
 ) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
+
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
@@ -41,36 +42,33 @@ class BookmarkAdapter(
 
         holder.itemView.setOnClickListener {
             try {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.fileUrl))
-                context.startActivity(intent)
+                context.startActivity(
+                    Intent(Intent.ACTION_VIEW, Uri.parse(item.fileUrl))
+                )
             } catch (e: Exception) {
                 Toast.makeText(context, "Unable to open file", Toast.LENGTH_SHORT).show()
             }
         }
 
         holder.btnRemove.setOnClickListener {
-            AlertDialog.Builder(context)
-                .setTitle("Remove bookmark")
-                .setMessage("Do you really want to delete this bookmark?")
-                .setPositiveButton("Yes") { _, _ ->
-                    val userId = auth.currentUser?.uid ?: return@setPositiveButton
-                    firestore.collection("users")
-                        .document(userId)
-                        .collection("bookmarks")
-                        .document(item.fileId)
-                        .delete()
-                        .addOnSuccessListener {
-                            list.removeAt(position)
-                            notifyItemRemoved(position)
-                            Toast.makeText(context, "Removed from bookmarks", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(context, "Failed to remove", Toast.LENGTH_SHORT).show()
-                        }
+
+            val userId = auth.currentUser?.uid ?: return@setOnClickListener
+
+            firestore.collection("users")
+                .document(userId)
+                .collection("bookmarks")
+                .document(item.fileId)
+                .delete()
+                .addOnSuccessListener {
+                    list.removeAt(position)
+                    notifyItemRemoved(position)
+                    Toast.makeText(context, "Removed from bookmarks", Toast.LENGTH_SHORT).show()
                 }
-                .setNegativeButton("No", null)
-                .show()
+                .addOnFailureListener {
+                    Toast.makeText(context, "Failed to remove", Toast.LENGTH_SHORT).show()
+                }
         }
     }
+
     override fun getItemCount(): Int = list.size
 }
