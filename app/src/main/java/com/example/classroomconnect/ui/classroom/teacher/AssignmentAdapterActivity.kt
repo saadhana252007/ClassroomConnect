@@ -45,6 +45,7 @@ class AssignmentAdapter(
 
         holder.binding.btnView.setOnClickListener {
             val intent = Intent(context, ViewSubmissionsActivity::class.java)
+            intent.putExtra("CLASS_ID", item.classId)
             intent.putExtra("ASSIGNMENT_ID", item.fileId)
             intent.putExtra("ASSIGNMENT_NAME", item.name)
             context.startActivity(intent)

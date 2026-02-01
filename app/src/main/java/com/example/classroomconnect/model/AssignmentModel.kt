@@ -4,6 +4,8 @@ data class StudentAssignmentModel(
     val assignmentId: String = "",
     val name: String = "",
     val fileUrl: String = "",
-    val classId: String = "",
-    val timestamp: Long = 0L
+    var classId: String = "",
+    val timestamp: Long = 0L,
+    var isSubmitted: Boolean = false,
+    var submittedFileUrl: String = ""
 )

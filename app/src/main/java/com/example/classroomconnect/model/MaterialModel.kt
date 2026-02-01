@@ -7,5 +7,6 @@ data class MaterialModel(
     val timestamp: Long = 0L,
     var classId: String = "",
     var myReaction: String = "",
-    var studentName: String = ""
+    var studentName: String = "",
+    var isBookmarked: Boolean = false
 )

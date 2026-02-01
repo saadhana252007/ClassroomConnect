@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.classroomconnect.databinding.ActivityStudentAssignmentBinding
 import com.example.classroomconnect.model.StudentAssignmentModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class StudentAssignmentActivity : AppCompatActivity() {
@@ -37,6 +38,8 @@ class StudentAssignmentActivity : AppCompatActivity() {
 
     private fun loadAssignments() {
 
+        val studentId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
         firestore.collection("classes")
             .document(classId)
             .collection("assignments")
@@ -46,21 +49,60 @@ class StudentAssignmentActivity : AppCompatActivity() {
 
                 assignmentList.clear()
 
+                if (snap.isEmpty) {
+                    adapter.notifyDataSetChanged()
+                    return@addOnSuccessListener
+                }
+
+                var processed = 0
+                val total = snap.size()
+
                 for (doc in snap.documents) {
 
+                    val assignmentId = doc.id
                     val name = doc.getString("name") ?: "Assignment"
                     val fileUrl = doc.getString("fileUrl") ?: ""
 
-                    assignmentList.add(
-                        StudentAssignmentModel(
-                            assignmentId = doc.id,
-                            name = name,
-                            fileUrl = fileUrl
-                        )
+                    val model = StudentAssignmentModel(
+                        assignmentId = assignmentId,
+                        name = name,
+                        fileUrl = fileUrl,
+                        classId = classId,
+                        isSubmitted = false,
+                        submittedFileUrl = ""
                     )
-                }
 
-                adapter.notifyDataSetChanged()
+                    assignmentList.add(model)
+
+                    firestore.collection("classes")
+                        .document(classId)
+                        .collection("assignments")
+                        .document(assignmentId)
+                        .collection("submissions")
+                        .whereEqualTo("studentId", studentId)
+                        .limit(1)
+                        .get()
+                        .addOnSuccessListener { subSnap ->
+
+                            if (!subSnap.isEmpty) {
+                                val subDoc = subSnap.documents[0]
+                                model.isSubmitted = true
+                                model.submittedFileUrl =
+                                    subDoc.getString("fileUrl") ?: ""
+                            }
+
+                            processed++
+                            if (processed == total) {
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                        .addOnFailureListener {
+                            processed++
+                            if (processed == total) {
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(
@@ -70,4 +112,5 @@ class StudentAssignmentActivity : AppCompatActivity() {
                 ).show()
             }
     }
+
 }

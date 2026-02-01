@@ -34,20 +34,51 @@ class StudentAssignmentsAdapter(
         holder.binding.tvStuAssignmentName.text =
             if (item.name.isNotEmpty()) item.name else "Assignment"
 
-        holder.binding.btnSubmitAssignment.setOnClickListener {
+        if (item.isSubmitted) {
 
-            if (item.assignmentId.isEmpty()) {
-                Toast.makeText(context, "Invalid assignment", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            holder.binding.btnSubmitAssignment.text = "View Submission"
+            holder.binding.btnSubmitAssignment.isEnabled = true
+            holder.binding.btnSubmitAssignment.alpha = 1f
+
+            holder.binding.btnSubmitAssignment.setOnClickListener {
+
+                if (item.submittedFileUrl.isBlank()) {
+                    Toast.makeText(
+                        context,
+                        "Submission file not available",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(item.submittedFileUrl)
+                )
+                context.startActivity(intent)
             }
 
-            val intent = Intent(context, SubmitAssignmentActivity::class.java)
-            intent.putExtra("CLASS_ID", item.classId)
-            intent.putExtra("ASSIGNMENT_ID", item.assignmentId)
-            intent.putExtra("ASSIGNMENT_NAME", item.name)
-            context.startActivity(intent)
+            holder.binding.root.setOnClickListener {
+                holder.binding.btnSubmitAssignment.performClick()
+            }
+
+        } else {
+
+            holder.binding.btnSubmitAssignment.text = "Submit"
+            holder.binding.btnSubmitAssignment.isEnabled = true
+            holder.binding.btnSubmitAssignment.alpha = 1f
+
+            holder.binding.btnSubmitAssignment.setOnClickListener {
+                val intent = Intent(context, SubmitAssignmentActivity::class.java)
+                intent.putExtra("CLASS_ID", item.classId)
+                intent.putExtra("ASSIGNMENT_ID", item.assignmentId)
+                intent.putExtra("ASSIGNMENT_NAME", item.name)
+                context.startActivity(intent)
+            }
         }
     }
+
+
 
     override fun getItemCount(): Int = list.size
 }

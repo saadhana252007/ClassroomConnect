@@ -10,9 +10,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class StudentMaterialsActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityStudentMaterialsBinding
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+
     private val materialList = mutableListOf<MaterialModel>()
     private lateinit var adapter: StudentMaterialsAdapter
 
@@ -22,8 +24,7 @@ class StudentMaterialsActivity : AppCompatActivity() {
         binding = ActivityStudentMaterialsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val classId = intent.getStringExtra("CLASS_ID")
-        if (classId.isNullOrEmpty()) {
+        val classId = intent.getStringExtra("CLASS_ID") ?: run {
             Toast.makeText(this, "Class ID missing", Toast.LENGTH_SHORT).show()
             finish()
             return
@@ -49,10 +50,11 @@ class StudentMaterialsActivity : AppCompatActivity() {
                 materialList.clear()
 
                 for (doc in snapshot.documents) {
+
                     val material = doc.toObject(MaterialModel::class.java) ?: continue
 
                     material.fileId = doc.id
-                    material.classId = classId   
+                    material.classId = classId
 
                     materialList.add(material)
 
@@ -70,6 +72,16 @@ class StudentMaterialsActivity : AppCompatActivity() {
                                 adapter.notifyDataSetChanged()
                             }
                         }
+
+                    firestore.collection("users")
+                        .document(userId)
+                        .collection("bookmarks")
+                        .document(material.fileId)
+                        .get()
+                        .addOnSuccessListener { bmDoc ->
+                            material.isBookmarked = bmDoc.exists()
+                            adapter.notifyDataSetChanged()
+                        }
                 }
 
                 adapter.notifyDataSetChanged()
@@ -78,5 +90,4 @@ class StudentMaterialsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to load materials", Toast.LENGTH_SHORT).show()
             }
     }
-
 }

@@ -33,6 +33,7 @@ class AssignmentsActivity : AppCompatActivity() {
             finish()
             return
         }
+        val test = AssignmentModel(classId = "TEST_OK")
 
         binding.rvMaterials.layoutManager = LinearLayoutManager(this)
 
@@ -70,7 +71,8 @@ class AssignmentsActivity : AppCompatActivity() {
                         AssignmentModel(
                             fileId = doc.id,
                             name = doc.getString("name") ?: "",
-                            fileUrl = doc.getString("fileUrl") ?: ""
+                            fileUrl = doc.getString("fileUrl") ?: "",
+                            classId = classId
                         )
                     )
                 }

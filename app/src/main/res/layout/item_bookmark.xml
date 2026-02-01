@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/bookmark" />
+            android:src="@drawable/bookmark_outline" />
 
         <LinearLayout
             android:orientation="vertical"

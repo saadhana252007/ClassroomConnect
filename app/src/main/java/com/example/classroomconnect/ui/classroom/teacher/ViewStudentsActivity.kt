@@ -46,6 +46,7 @@ class ViewStudentsActivity : AppCompatActivity() {
                 var loaded = 0
 
                 studentIds.forEach { id ->
+
                     firestore.collection("users")
                         .document(id)
                         .get()
@@ -58,7 +59,10 @@ class ViewStudentsActivity : AppCompatActivity() {
                                     email = userDoc.getString("email") ?: "No email"
                                 )
                             )
-
+                        }
+                        .addOnFailureListener {
+                        }
+                        .addOnCompleteListener {
                             loaded++
                             if (loaded == studentIds.size) {
                                 setupAdapter(students)
@@ -67,6 +71,8 @@ class ViewStudentsActivity : AppCompatActivity() {
                 }
             }
     }
+
+
 
     private fun setupAdapter(students: MutableList<Student>) {
 

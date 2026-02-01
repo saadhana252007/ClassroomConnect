@@ -14,7 +14,7 @@ class AuthViewModel : ViewModel() {
         password: String,
         name: String,
         role: String) {
-        if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty() || role.isEmpty()) {
             _signupResult.value = Pair(false, "All fields are required")
             return
         }
