@@ -3,6 +3,7 @@ package com.example.classroomconnect.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ class StudentHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStudentHomeBinding
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    private var lastBackTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +37,30 @@ class StudentHomeActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (System.currentTimeMillis() - lastBackTime < 2000) {
+                        finishAffinity() // exits app
+                    } else {
+                        Toast.makeText(
+                            this@StudentHomeActivity,
+                            "Press back again to exit",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        lastBackTime = System.currentTimeMillis()
+                    }
+                }
+            }
+        )
+
 
 
         loadStudentClasses()
     }
+
+
 
     private fun showJoinClassDialog() {
         val input = android.widget.EditText(this)
@@ -102,4 +124,9 @@ class StudentHomeActivity : AppCompatActivity() {
 
             }
     }
+
+
+
+
+
 }

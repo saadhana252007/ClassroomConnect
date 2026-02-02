@@ -13,7 +13,7 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, LoginSignupActivity::class.java))
             finish()
         }
         else {
@@ -27,11 +27,18 @@ class StartActivity : AppCompatActivity() {
                         val role = doc.getString("role")?.lowercase()
                         Log.d("StartActivity", "Fetched role: $role")  // debug role
                         when(role) {
-                            "teacher" -> startActivity(Intent(this, TeacherHomeActivity::class.java))
-                            "student" -> startActivity(Intent(this, StudentHomeActivity::class.java))
+                            "teacher" -> {
+                                startActivity(Intent(this, TeacherHomeActivity::class.java))
+
+                            }
+                            "student" -> {
+                                openHome(Intent(this, StudentHomeActivity::class.java))
+
+                            }
                             else -> {
                                 Log.d("StartActivity", "User role missing or invalid")
                                 startActivity(Intent(this, SignupActivity::class.java))
+                                finish()
                             }
                         }
                         finish()
@@ -49,4 +56,10 @@ class StartActivity : AppCompatActivity() {
                 }
         }
     }
+    private fun openHome(intent: Intent) {
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
 }

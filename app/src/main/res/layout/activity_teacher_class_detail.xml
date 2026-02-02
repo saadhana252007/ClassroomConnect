@@ -6,7 +6,7 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mid_vio">
+    android:background="@drawable/light_blue">
 
     <TextView
         android:id="@+id/classNameTextView"
@@ -15,9 +15,9 @@
         android:text="Class Name"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="#4A148C"
+        android:textColor="#191970"
         android:gravity="center"
-        android:background="@drawable/textviewbox"
+        android:background="@drawable/textviewbox_blue"
         android:fontFamily="@font/eagle_lake"
         android:paddingVertical="12dp"
         android:layout_marginBottom="16dp"
@@ -30,8 +30,8 @@
         android:text="Class description will be shown here."
         android:textSize="16sp"
         android:padding="12dp"
-        android:background="#EDE7F6"
-        android:textColor="#4A148C"
+        android:background="#E3F2FD"
+        android:textColor="#191970"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="20dp" />
 
@@ -57,7 +57,7 @@
                 android:layout_height="60dp"
                 android:layout_columnWeight="1"
                 android:text="View Materials"
-                android:background="@drawable/buttonbox"
+                android:background="@drawable/buttonbox_blue"
                 android:textColor="#FFFFFF"
                 android:padding="12dp"
                 android:layout_marginTop="10dp"
@@ -76,7 +76,7 @@
                 android:layout_height="60dp"
                 android:layout_columnWeight="1"
                 android:text="View Students"
-                android:background="@drawable/buttonbox"
+                android:background="@drawable/buttonbox_blue"
                 android:textColor="#FFFFFF"
                 android:padding="12dp"
                 android:layout_marginTop="10dp"
@@ -93,7 +93,7 @@
                 android:layout_height="60dp"
                 android:layout_columnWeight="1"
                 android:text="Discussion Forum"
-                android:background="@drawable/buttonbox"
+                android:background="@drawable/buttonbox_blue"
                 android:textColor="#FFFFFF"
                 android:padding="12dp"
                 android:layout_marginTop="5dp"
@@ -111,7 +111,7 @@
                 android:layout_height="60dp"
                 android:layout_columnWeight="1"
                 android:text="Assignments"
-                android:background="@drawable/buttonbox"
+                android:background="@drawable/buttonbox_blue"
                 android:textColor="#FFFFFF"
                 android:padding="12dp"
                 android:layout_marginTop="5dp"

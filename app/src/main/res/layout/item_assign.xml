@@ -7,7 +7,7 @@
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="#D1C4E9">
+    app:cardBackgroundColor="#E3F2FD">
 
 
     <LinearLayout
@@ -23,13 +23,13 @@
         android:text="Assignment name"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#4A148C"/>
+        android:textColor="#191970"/>
 
         <Button
             android:id="@+id/btnView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/buttonbox"
+            android:background="@drawable/buttonbox_blue"
             android:text="View Submissions"
             android:fontFamily="@font/eagle_lake"
             android:textColor="@color/white"
@@ -47,6 +47,6 @@
         android:layout_height="35dp"
         android:layout_gravity="right"
         android:padding="4dp"
-        android:src="@drawable/delete" />
+        android:src="@drawable/delete_stu" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

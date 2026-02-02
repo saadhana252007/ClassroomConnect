@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/mid_vio">
+    android:background="@drawable/light_blue">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:fontFamily="@font/eagle_lake"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
+        android:textColor="#191970"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/white_border_edittext"/>
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Assignment"
-        android:background="@drawable/buttonbox"
+        android:background="@drawable/buttonbox_blue"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:layout_marginTop="17dp"
@@ -44,7 +44,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
-        android:textColor="@color/white"
+        android:textColor="#191970"
         android:textSize="15sp" />
 
     <Button
@@ -55,7 +55,7 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:text="Upload Assignment"
-        android:background="@drawable/buttonbox"
+        android:background="@drawable/buttonbox_blue"
         app:backgroundTint="@null"
         app:rippleColor="@android:color/transparent"
         android:textSize="17sp"
@@ -71,11 +71,11 @@
         android:hint="Assignment Name"
         android:textSize="16sp"
         android:padding="12dp"
-        android:background="@drawable/border"
-        android:textColor="#4A148C"
+        android:background="@drawable/textviewbox_blue"
+        android:textColor="#191970"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="20dp"
-        android:textColorHint="#4A148C"
+        android:textColorHint="#191970"
         />
 
     <ProgressBar

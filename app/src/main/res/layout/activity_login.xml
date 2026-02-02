@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:padding="24dp"
     android:gravity="center"
-    android:background="@drawable/class_back"
+    android:background="@drawable/light_blue"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,7 +13,7 @@
         android:textSize="50sp"
         android:textStyle="bold"
         android:fontFamily="@font/eagle_lake"
-        android:textColor="@android:color/white"
+        android:textColor="#191970"
         android:layout_marginBottom="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,33 +23,33 @@
         android:id="@+id/etEmail"
         android:hint="   Email"
         android:inputType="textEmailAddress"
-        android:background="@drawable/textviewbox"
+        android:background="@drawable/textviewbox_blue"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:textSize="20sp"
-        android:textColor="#4A148C"
-        android:textColorHint="#4A148C"/>
+        android:textColor="#191970"
+        android:textColorHint="#191970"/>
 
     <EditText
         android:id="@+id/etPassword"
         android:hint="   Password"
         android:inputType="textPassword"
-        android:background="@drawable/textviewbox"
+        android:background="@drawable/textviewbox_blue"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="15dp"
         android:textSize="20sp"
-        android:textColor="#4A148C"
-        android:textColorHint="#4A148C"/>
+        android:textColor="#191970"
+        android:textColorHint="#191970"/>
 
     <TextView
         android:id="@+id/tvForgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
-        android:textColor="#4A148C"
+        android:textColor="#191970"
         android:textSize="16sp"
         android:layout_gravity="end"
         android:padding="8dp"
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/buttonbox"
+        android:background="@drawable/buttonbox_blue"
         app:backgroundTint="@null"
         app:rippleColor="@android:color/transparent"
         android:textSize="20sp"

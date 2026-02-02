@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/mid_vio">
+    android:background="@drawable/light_blue">
 
     <TextView
         android:id="@+id/tvStudentsTitle"
@@ -14,7 +14,7 @@
         android:text="Students"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
+        android:textColor="#191970"
         android:gravity="center"
         android:background="@drawable/white_border_edittext"
         android:fontFamily="@font/eagle_lake"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="Total Students: 0"
         android:textSize="20sp"
-        android:textColor="#4A148C"
+        android:textColor="#191970"
         android:layout_marginBottom="10dp"
         android:textStyle="bold"/>
 

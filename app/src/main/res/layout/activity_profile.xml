@@ -22,8 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnLogout"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="85dp"/>
 
     <ImageButton
         android:id="@+id/btnLogout"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="0dp"/>
 
     <TextView
         android:id="@+id/tvNameLabel"
@@ -60,7 +60,7 @@
         android:textColor="#191970"
         app:layout_constraintTop_toBottomOf="@id/imgProfile"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="2dp"
         android:layout_marginStart="24dp"/>
 
     <EditText
@@ -162,6 +162,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="24dp"/>
 
+
+
+    <TextView
+        android:id="@+id/tvChangePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" ChangePassword"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:textColor="#191970"
+        app:layout_constraintTop_toBottomOf="@id/tvInterest"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="25dp" />
+
     <Button
         android:id="@+id/btnEditProfile"
         android:layout_width="wrap_content"
@@ -177,9 +192,11 @@
         android:background="@drawable/buttonbox_blue"
         app:backgroundTint="@null"
         app:rippleColor="@android:color/transparent"
-        app:layout_constraintTop_toBottomOf="@id/tvInterest"
+        app:layout_constraintTop_toBottomOf="@id/tvChangePassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="30dp"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

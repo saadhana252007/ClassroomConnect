@@ -7,7 +7,7 @@
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="#D1C4E9">
+    app:cardBackgroundColor="#E3F2FD">
 
     <LinearLayout
         android:padding="16dp"
@@ -45,7 +45,7 @@
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/delete"
+            android:src="@drawable/delete_stu"
             android:layout_gravity="end"/>
 
     </LinearLayout>

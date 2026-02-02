@@ -5,7 +5,7 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mid_vio">
+    android:background="@drawable/light_blue">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -14,7 +14,7 @@
         android:text="Class Materials"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
+        android:textColor="#191970"
         android:gravity="center"
         android:background="@drawable/white_border_edittext"
         android:padding="10dp"

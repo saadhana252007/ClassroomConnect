@@ -60,6 +60,31 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginSignupActivity::class.java))
             finish()
         }
+        binding.tvChangePassword.setOnClickListener {
+            val email = auth.currentUser?.email
+
+            if (email.isNullOrEmpty()) {
+                Toast.makeText(this, "Email not found", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.sendPasswordResetEmail(email)
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        this,
+                        "Password reset link sent to your email",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        this,
+                        "Failed to send reset email",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
+
     }
 
     private fun loadUserProfile() {

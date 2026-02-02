@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/mid_vio">
+    android:background="@drawable/light_blue">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:fontFamily="@font/eagle_lake"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
+        android:textColor="#191970"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/white_border_edittext"/>
@@ -26,11 +26,11 @@
         android:layout_height="40dp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/border"
+        android:background="@drawable/textviewbox_blue"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:backgroundTint="@null"
         app:rippleColor="@android:color/transparent"
-        android:textColor="#4A148C"/>
+        android:textColor="#191970"/>
 
     <Button
         android:id="@+id/selectFileBtn"
@@ -40,7 +40,7 @@
         android:text="Select File"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:background="@drawable/buttonbox"
+        android:background="@drawable/buttonbox_blue"
         app:backgroundTint="@null"
         android:textSize="17sp"
         app:rippleColor="@android:color/transparent"
@@ -54,7 +54,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="1dp"
-        android:textColor="@color/white"
+        android:textColor="#191970"
         android:textSize="15sp"
         />
 
@@ -67,7 +67,7 @@
         android:textSize="17sp"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:background="@drawable/buttonbox"
+        android:background="@drawable/buttonbox_blue"
         app:backgroundTint="@null"
         app:rippleColor="@android:color/transparent"
         android:fontFamily="@font/eagle_lake"/>
@@ -79,7 +79,7 @@
         android:hint="File Name"
         android:textSize="16sp"
         android:padding="12dp"
-        android:background="@drawable/border"
+        android:background="@drawable/textviewbox_blue"
         android:textColor="#4A148C"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="20dp"
