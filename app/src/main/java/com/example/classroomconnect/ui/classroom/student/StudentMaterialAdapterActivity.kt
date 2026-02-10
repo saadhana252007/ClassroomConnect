@@ -99,6 +99,10 @@ class StudentMaterialsAdapter(
         }
 
         holder.btnDownload.setOnClickListener {
+            if (item.fileUrl.isBlank()) {
+                Toast.makeText(context, "File not available", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             AlertDialog.Builder(context)
                 .setTitle("Material options")
                 .setItems(arrayOf("Preview", "Download")) { _, which ->
@@ -107,7 +111,57 @@ class StudentMaterialsAdapter(
                 }
                 .show()
         }
+        holder.itemView.setOnLongClickListener {
+            val userId = auth.currentUser?.uid ?: return@setOnLongClickListener true
+
+            val emojis = arrayOf("👍", "❤️", "🔥", "😊", "👏", "🙌")
+
+            AlertDialog.Builder(context)
+                .setTitle("React to material")
+                .setItems(emojis) { _, which ->
+
+                    val selectedEmoji = emojis[which]
+
+                    firestore.collection("users")
+                        .document(userId)
+                        .get()
+                        .addOnSuccessListener { userDoc ->
+
+                            val studentName =
+                                userDoc.getString("name") ?: "Student"
+
+                            val reactionData = hashMapOf(
+                                "emoji" to selectedEmoji,
+                                "studentName" to studentName
+                            )
+
+                            firestore.collection("classes")
+                                .document(item.classId)
+                                .collection("materials")
+                                .document(item.fileId)
+                                .collection("reactions")
+                                .document(userId)
+                                .set(reactionData)
+                                .addOnSuccessListener {
+
+                                    item.myReaction = selectedEmoji
+                                    notifyItemChanged(position)
+
+                                    Toast.makeText(
+                                        context,
+                                        "Reacted $selectedEmoji",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }
+                }
+                .show()
+
+            true
+        }
     }
+    
+
 
     override fun getItemCount(): Int = list.size
 
